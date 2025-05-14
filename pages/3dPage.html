@@ -4,11 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>PRROJEK GRAFIKA | 3D PAGE</title>
   </head>
-  <body>
+  <body class="relative">
     <!-- NAVBAR -->
-    <header>
+    <header class="absolute w-full">
       <nav class="navbar">
         <div class="brand">PROJEK GRAFIKA</div>
         <ul class="nav-links">
@@ -18,13 +19,88 @@
         </ul>
       </nav>
     </header>
+    <!-- Navigator -->
+     <section class="absolute right-5 top-20 bg-white w-[400px] h-[400px] p-2 rounded-md flex flex-col gap-3">
+        <h1 class="w-full text-center font-bold text-xl mb-2">Navigator</h1>
+        <!-- Object Dipilih -->
+        <div>
+            <button id="objek1" class="objek border border-black rounded-md px-3 py-1 cursor-pointer">Objek 1</button>
+            <button id="objek2" class="objek border border-black rounded-md px-3 py-1 cursor-pointer">Objek 2</button>
+            <button id="objek3" class="objek border border-black rounded-md px-3 py-1 cursor-pointer">objek 3</button>
+            <button id="reset" class="border border-black rounded-md px-3 py-1 cursor-pointer">Reset</button>
+        </div>
+        <!-- Button Rotate -->
+        <div class="flex items-center gap-3">
+          <input for="fillColor" type="number" id="nilaiRotasi" value="90" class="w-18 border-1 p-1"></input> Derajat
+          <button
+            id="rotasi"
+            type="submit"
+            class="border border-black rounded-md px-3 py-1 cursor-pointer"
+          >
+            Putar
+          </button>
+          <!-- Button Scale -->
+        </div>
+          <div class="flex items-center gap-3">
+          <input for="fillColor" type="number" id="nilaiSkala" value="2" class="w-10 border-1 p-1"></input> Kali
+          <button
+            id="skala"
+            type="submit"
+            class="border border-black rounded-md px-3 py-1 cursor-pointer"
+          >
+            Scale
+          </button>          
+        </div>
+        <!-- Kasih Warna -->
+        <div class="flex items-center">
+          <label for="fillColor">Fill Color:</label>
+          <input type="color" id="fillColor" name="fillColor" value="#F4D03F" />
+        </div>
+        <div class="grid grid-cols-3 gap-1 w-1/2">
+          <div></div>
+          <button
+            id="atas"
+            class="translate border border-black rounded-md px-2 py-1 cursor-pointer"
+            type="submit"
+          >
+            Atas
+          </button>
+          <div></div>
+          <button
+            id="kiri"
+            class="translate border border-black rounded-md px-2 py-1 cursor-pointer "
+            type="submit"
+          >
+            Kiri
+          </button>
+          <input
+            id="nilaiTranslate"
+            type="number"
+            class="border border-black px-2 py-1 cursor-pointer "
+            type="submit"
+            value="20"
+          />
+          <button
+            id="kanan"
+            class="translate border border-black rounded-md px-2 py-1 cursor-pointer "
+            type="submit"
+          >
+            Kanan
+          </button>
+          <div></div>
+          <button
+            id="bawah"
+            class="translate border border-black rounded-md px-2 py-1 cursor-pointer "
+            type="submit"
+          >
+            Bawah
+          </button>
+          <div></div>
+        </div>
 
-    <!-- CONTENT -->
-    <section>
-      <div>THREE JS</div>
-      <div>KONTROLER DARI THREE JS</div>
-    </section>
+     </section>
+      
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="../js/handler3D.js"></script>
   </body>
-
-  <script src="../js/handler3D.js"></script>
 </html>
