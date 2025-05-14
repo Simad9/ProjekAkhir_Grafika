@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>PRROJEK GRAFIKA | 2D PAGE</title>
   </head>
   <body>
@@ -20,10 +21,128 @@
     </header>
 
     <!-- CONTENT -->
-    <section>
-      <div>CANVAS API</div>
-      <div>KONTROLER DARI CANVAS API</div>
+    <section class="flex flex-row p-4 gap-4">
+      <canvas
+        id="myCanvas"
+        width="500"
+        height="400"
+        style="border: 1px solid black"
+        class="bg-white"
+      ></canvas>
+      <div class="flex flex-col gap-5">
+        <!-- OBjek Di tekan -->
+        <div>
+          <button
+            id="objek1"
+            class="objek border border-black rounded-md px-3 py-1 cursor-pointer"
+          >
+            Objek 1
+          </button>
+          <button
+            id="objek2"
+            class="objek border border-black rounded-md px-3 py-1 cursor-pointer"
+          >
+            Objek 2
+          </button>
+          <button
+            id="objek3"
+            class="objek border border-black rounded-md px-3 py-1 cursor-pointer"
+          >
+            Objek 3
+          </button>
+          <button
+            id="reset"
+            class="border border-black rounded-md px-3 py-1 cursor-pointer"
+          >
+            Reset
+          </button>
+        </div>
+        <!-- Button Translate -->
+        <div class="grid grid-cols-3 gap-2">
+          <button type="submit"></button>
+          <button
+            id="atas"
+            class="translate border border-black rounded-md px-3 py-1 cursor-pointer"
+            type="submit"
+          >
+            Atas
+          </button>
+          <button type="submit"></button>
+          <button
+            id="kiri"
+            class="translate border border-black rounded-md px-3 py-1 cursor-pointer"
+            type="submit"
+          >
+            Kiri
+          </button>
+          <input
+            id="nilaiTranslate"
+            type="number"
+            class="border border-black px-3 py-1 cursor-pointer"
+            type="submit"
+            value="20"
+          />
+          <button
+            id="kanan"
+            class="translate border border-black rounded-md px-3 py-1 cursor-pointer"
+            type="submit"
+          >
+            Kanan
+          </button>
+          <button type="submit"></button>
+          <button
+            id="bawah"
+            class="translate border border-black rounded-md px-3 py-1 cursor-pointer"
+            type="submit"
+          >
+            Bawah
+          </button>
+          <button type="submit"></button>
+        </div>
+        <!-- Button Rotate -->
+        <div class="flex items-center gap-3">
+          <input for="fillColor" type="number" id="nilaiRotasi" value="90" class="w-18 border-1 p-1"></input> Derajat
+          <button
+            id="rotasi"
+            type="submit"
+            class="border border-black rounded-md px-3 py-1 cursor-pointer"
+          >
+            Putar
+          </button>
+        </div>
+        <!-- Button Scale -->
+        <div class="flex items-center gap-3">
+          <input for="fillColor" type="number" id="nilaiSkala" value="2" class="w-10 border-1 p-1"></input> Kali
+          <button
+            id="skala"
+            type="submit"
+            class="border border-black rounded-md px-3 py-1 cursor-pointer"
+          >
+            Scale
+          </button>
+        </div>
+        <!-- Kasih Warna -->
+        <div class="flex items-center">
+          <label for="fillColor">Fill Color:</label>
+          <input type="color" id="fillColor" name="fillColor" value="#F4D03F" />
+        </div>
+      </div>
     </section>
+
+    <!-- Dokumentasi -->
+    <div class="px-5">
+      <h1 class="font-bold text-xl">Dokumentasi :</h1>
+      <p class="font-semibold text-base">Keyboard:</p>
+      <p>W = Atas, A = Kiri, S = Bawah, D = Kanan</p>
+      <p>arrow atas = Atas, arrow kiri = Kiri, arrow bawah = Bawah, arrow kanan = Kanan</p>
+      <p>Q = mutar kiri, R = mutar kanan</p>
+      <p>R = scale up , T = scale down</p>
+      <p>Space = reset</p>
+      <br>
+      <p>Mouse</p>
+      <p>Drag = pindah posisi</p>
+      <p>Scale Up = scale up</p><p>Scale Down = scale down</p>
+    </div>
   </body>
 
   <script src="../js/handler2D.js"></script>
