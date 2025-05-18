@@ -1,159 +1,290 @@
-// === DOM Elements ===
-const objekButtons = document.querySelectorAll(".objek");
-const resetBtn = document.getElementById("reset");
-const warnaInput = document.getElementById("fillColor");
+// Ambil elemen tombol dan input
+const btnObjek1 = document.getElementById("objek1");
+const btnObjek2 = document.getElementById("objek2");
+const btnObjek3 = document.getElementById("objek3");
+const btnReset = document.getElementById("reset");
 
-// === Three.js Setup ===
+const btnRotate = document.getElementById("rotasi");
+const inputRotate = document.getElementById("nilaiRotasi");
+
+const btnScale = document.getElementById("skala");
+const inputScale = document.getElementById("nilaiSkala");
+
+const inputColor = document.getElementById("fillColor");
+
+const btnAtas = document.getElementById("atas");
+const btnBawah = document.getElementById("bawah");
+const btnKiri = document.getElementById("kiri");
+const btnKanan = document.getElementById("kanan");
+const btnMaju = document.getElementById("maju");
+const btnMundur = document.getElementById("mundur");
+const inputTranslate = document.getElementById("nilaiTranslate");
+
+// Setup scene, camera, renderer
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x222222);
 const camera = new THREE.PerspectiveCamera(
-  75,
+  60,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
-camera.position.z = 5;
+camera.position.set(0, 3, 6);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// === Lighting ===
-scene.add(new THREE.AmbientLight(0xffffff, 0.3));
-const light = new THREE.PointLight(0xffffff, 1.2);
-light.position.set(30, 30, 30);
-scene.add(light);
+// OrbitControls untuk navigasi kamera
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
 
-// === State ===
+// Lights
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+scene.add(ambientLight);
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+dirLight.position.set(5, 10, 7);
+scene.add(dirLight);
+
+// Group untuk objek aktif dan transformasinya
+const objectGroup = new THREE.Group();
+scene.add(objectGroup);
+
+// Variabel global objek dan material agar bisa diakses
 let activeObject = null;
-let materialColor = 0xff0000;
-let isDragging = false;
-let previousMouse = { x: 0, y: 0 };
+let activeMaterial = null;
 
-// === Helpers ===
-function createMaterial(setengahTabung = false) {
-  if (setengahTabung) {
-    return new THREE.MeshPhongMaterial({
-      color: materialColor,
-      vertexColors: true,
-    });
-  } else {
-    return new THREE.MeshPhongMaterial({ color: materialColor });
+// Fungsi buat objek donat (torus)
+function createDonat(color) {
+  const geometry = new THREE.TorusGeometry(1, 0.3, 16, 100);
+  const material = new THREE.MeshStandardMaterial({ color });
+  const torus = new THREE.Mesh(geometry, material);
+  return { mesh: torus, material };
+}
+
+// Fungsi buat objek panah 3D (tabung + kerucut)
+function createArrow3D(color) {
+  const group = new THREE.Group();
+
+  // Tabung sebagai batang panah
+  const cylinderGeo = new THREE.CylinderGeometry(0.1, 0.1, 1.5);
+  const material = new THREE.MeshStandardMaterial({ color });
+  const cylinder = new THREE.Mesh(cylinderGeo, material);
+  cylinder.position.y = 0.75; // geser ke atas supaya ujung di (0,0,0)
+  group.add(cylinder);
+
+  // Kerucut sebagai ujung panah
+  const coneGeo = new THREE.ConeGeometry(0.2, 0.5, 32);
+  const cone = new THREE.Mesh(coneGeo, material);
+  cone.position.y = 1.75; // ujung kerucut di atas tabung
+  group.add(cone);
+
+  return { mesh: group, material };
+}
+
+// Fungsi buat setengah bola
+function createHalfSphere(color) {
+  // SphereGeometry dengan phiLength = PI (180 derajat)
+  const geometry = new THREE.SphereGeometry(
+    1,
+    32,
+    32,
+    0,
+    Math.PI * 2,
+    0,
+    Math.PI / 2
+  );
+  const material = new THREE.MeshStandardMaterial({
+    color,
+    side: THREE.DoubleSide,
+  });
+  const halfSphere = new THREE.Mesh(geometry, material);
+  return { mesh: halfSphere, material };
+}
+
+// Fungsi hapus objek lama dari group
+function clearActiveObject() {
+  if (activeObject) {
+    objectGroup.remove(activeObject);
+    // Dispose geometry dan material jika ada
+    if (activeObject.geometry) activeObject.geometry.dispose();
+    if (activeMaterial) activeMaterial.dispose();
+    activeObject = null;
+    activeMaterial = null;
   }
 }
 
-// === Objects ===
-// Donat (Torus)
-const donat = new THREE.Mesh(
-  new THREE.TorusGeometry(0.5, 0.2, 16, 100),
-  createMaterial()
-);
+// Fungsi tampilkan objek baru
+function showObject(type) {
+  clearActiveObject();
+  const color = inputColor.value;
 
-// Kerucut + Tabung
-const kerucutTabung = new THREE.Group();
-
-const meshKerucut = new THREE.Mesh(
-  new THREE.ConeGeometry(0.8, 2, 16),
-  createMaterial()
-);
-meshKerucut.position.y = 2;
-kerucutTabung.add(meshKerucut);
-
-const meshTabung = new THREE.Mesh(
-  new THREE.CylinderGeometry(0.5, 0.5, 2, 16),
-  createMaterial()
-);
-kerucutTabung.add(meshTabung);
-
-// Setengah bola (kubah)
-const halfSphere = new THREE.Mesh(
-  new THREE.SphereGeometry(1, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2),
-  createMaterial()
-);
-
-// Permukaan dasar (lingkaran datar)
-const circleBase = new THREE.Mesh(
-  new THREE.CircleGeometry(1, 32),
-  createMaterial(true)
-);
-circleBase.rotation.x = -Math.PI / 2; // putar agar menghadap ke atas
-circleBase.position.y = 0; // sejajar bawah bola
-circleBase.geometry.setAttribute(
-  "color",
-  new THREE.BufferAttribute(new Float32Array(circleBase.geometry.attributes.position.count * 3), 3)
-);
-
-// Gabungkan jadi satu Group
-const setengahBola = new THREE.Group();
-setengahBola.add(halfSphere);
-setengahBola.add(circleBase);
-
-// Semua objek
-const objects = [donat, kerucutTabung, setengahBola];
-
-// === Event: Pilih Objek ===
-objekButtons.forEach((btn, index) => {
-  btn.addEventListener("click", () => {
-    scene.clear();
-    scene.add(light); // tambahkan cahaya lagi setelah clear
-    scene.add(new THREE.AmbientLight(0xffffff, 0.3));
-    activeObject = objects[index];
-    scene.add(activeObject);
-  });
-});
-
-// === Event: Ubah Warna ===
-warnaInput.addEventListener("input", () => {
-  materialColor = parseInt(warnaInput.value.replace(/^#/, ""), 16);
-  objects.forEach((obj) => {
-    if (obj.type === "Group") {
-      obj.children.forEach((child) =>
-        child.material.color.setHex(materialColor)
-      );
-    } else {
-      obj.material.color.setHex(materialColor);
-    }
-  });
-});
-
-// === Event: Reset ===
-resetBtn.addEventListener("click", () => {
-  objects.forEach((obj) => {
-    obj.position.set(0, 0, 0);
-    obj.rotation.set(0, 0, 0);
-    obj.scale.set(1, 1, 1);
-  });
-});
-
-// === Event: Mouse Drag Rotation ===
-document.addEventListener("mousedown", (e) => {
-  if (e.button === 0) isDragging = true;
-});
-
-document.addEventListener("mousemove", (e) => {
-  if (isDragging && activeObject) {
-    const dx = e.offsetX - previousMouse.x;
-    const dy = e.offsetY - previousMouse.y;
-    activeObject.rotation.y += dx * 0.01;
-    activeObject.rotation.x += dy * 0.01;
+  let objData;
+  switch (type) {
+    case 1:
+      objData = createDonat(color);
+      break;
+    case 2:
+      objData = createArrow3D(color);
+      break;
+    case 3:
+      objData = createHalfSphere(color);
+      break;
   }
-  previousMouse.x = e.offsetX;
-  previousMouse.y = e.offsetY;
-});
+  activeObject = objData.mesh;
+  activeMaterial = objData.material;
 
-document.addEventListener("mouseup", () => (isDragging = false));
+  objectGroup.add(activeObject);
 
-// === Event: Mouse Wheel Scaling ===
-document.addEventListener("wheel", (e) => {
-  if (activeObject) {
-    const scaleFactor = 1 - e.deltaY * 0.001;
-    activeObject.scale.multiplyScalar(scaleFactor);
+  resetTransform();
+}
+
+// Fungsi reset posisi, rotasi, dan skala objek aktif
+function resetTransform() {
+  if (!activeObject) return;
+  objectGroup.position.set(0, 0, 0);
+  objectGroup.rotation.set(0, 0, 0);
+  objectGroup.scale.set(1, 1, 1);
+}
+
+// Event handler tombol objek
+btnObjek1.addEventListener("click", () => showObject(1));
+btnObjek2.addEventListener("click", () => showObject(2));
+btnObjek3.addEventListener("click", () => showObject(3));
+btnReset.addEventListener("click", () => {
+  console.log("reset oke");
+
+  resetTransform();
+  if (activeMaterial && inputColor.value) {
+    activeMaterial.color.set(inputColor.value);
   }
 });
 
-// === Render Loop ===
-const loader = new THREE.TextureLoader();
-loader.load("../images/background.jpg", function (texture) {
-  scene.background = texture;
+// Event handler rotate
+btnRotate.addEventListener("click", () => {
+  if (!activeObject) return;
+  const deg = parseFloat(inputRotate.value);
+  // Putar di sumbu Y (atas bawah)
+  objectGroup.rotation.y += THREE.MathUtils.degToRad(deg);
 });
 
-renderer.setAnimationLoop(() => renderer.render(scene, camera));
+// Event handler scale
+btnScale.addEventListener("click", () => {
+  if (!activeObject) return;
+  const scaleFactor = parseFloat(inputScale.value);
+  console.log(scaleFactor);
+
+  if (scaleFactor === 0) {
+    alert("Scale factor cannot be zero");
+  } else if (scaleFactor <= -1) {
+    const scaleValue = 0.9 * scaleFactor;
+    objectGroup.scale.multiplyScalar(scaleValue < 0 ? 0.5 : scaleValue); // Scale down
+    console.log("Scale down = ", scaleValue < 0 ? 0.1 : scaleValue);
+  } else if (scaleFactor >= 1) {
+    objectGroup.scale.multiplyScalar(1.1 * scaleFactor); // Scale up
+    console.log("Scale up = ", 1.1 * scaleFactor);
+  }
+});
+
+// Event handler warna (langsung update warna material)
+inputColor.addEventListener("input", () => {
+  if (!activeMaterial) return;
+  activeMaterial.color.set(inputColor.value);
+});
+
+// Event handler translate
+function translateActiveObject(dx, dy, dz = 0) {
+  objectGroup.position.x += dx;
+  objectGroup.position.y += dy;
+  objectGroup.position.z += dz;
+}
+
+btnAtas.addEventListener("click", () => {
+  const val = parseFloat(inputTranslate.value);
+  translateActiveObject(0, val, 0);
+});
+
+btnBawah.addEventListener("click", () => {
+  const val = parseFloat(inputTranslate.value);
+  translateActiveObject(0, -val, 0);
+});
+
+btnKiri.addEventListener("click", () => {
+  const val = parseFloat(inputTranslate.value);
+  translateActiveObject(-val, 0, 0);
+});
+
+btnKanan.addEventListener("click", () => {
+  const val = parseFloat(inputTranslate.value);
+  translateActiveObject(val, 0, 0);
+});
+
+btnMaju.addEventListener("click", () => {
+  const val = parseFloat(inputTranslate.value);
+  translateActiveObject(0, 0, val);
+});
+
+btnMundur.addEventListener("click", () => {
+  const val = parseFloat(inputTranslate.value);
+  translateActiveObject(0, 0, -val);
+});
+
+// Event handler keyboard Transalte
+document.addEventListener("keydown", (event) => {
+  if (event.key === "a") {
+    const val = parseFloat(inputTranslate.value);
+    translateActiveObject(-val, 0, 0);
+  } else if (event.key === "d") {
+    const val = parseFloat(inputTranslate.value);
+    translateActiveObject(val, 0, 0);
+  } else if (event.key === "w") {
+    const val = parseFloat(inputTranslate.value);
+    translateActiveObject(0, 0, val);
+  } else if (event.key === "s") {
+    const val = parseFloat(inputTranslate.value);
+    translateActiveObject(0, 0, -val);
+  } else if (event.key === "q") {
+    const val = parseFloat(inputTranslate.value);
+    translateActiveObject(0, val, 0);
+  } else if (event.key === "e") {
+    const val = parseFloat(inputTranslate.value);
+    translateActiveObject(0, -val, 0);
+  }
+});
+
+// Event handler keyboard Scale
+document.addEventListener("keydown", (event) => {
+    if (event.key === "-") {
+    objectGroup.scale.multiplyScalar(0.9); // Scale down
+    console.log("Scale down = ", scaleValue < 0 ? 0.1 : scaleValue);
+  } else if (event.key === "=") {
+    objectGroup.scale.multiplyScalar(1.1); // Scale up
+    console.log("Scale up = ", 1.1 * scaleFactor);
+  }
+});
+
+// Event handler keyboard Rotate
+document.addEventListener("keydown", (event) => {
+  if (event.key === "r") {
+    const deg = parseFloat(inputRotate.value);
+    objectGroup.rotation.y += THREE.MathUtils.degToRad(deg);
+  }
+});
+
+// Resize handler
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Render loop
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+
+// Tampilkan objek default donat saat halaman pertama kali load
+showObject(1);

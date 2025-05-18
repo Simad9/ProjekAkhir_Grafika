@@ -8,17 +8,29 @@
     <title>PRROJEK GRAFIKA | 3D PAGE</title>
   </head>
   <body class="relative">
-    <!-- NAVBAR -->
-    <header class="absolute w-full">
-      <nav class="navbar">
-        <div class="brand">PROJEK GRAFIKA</div>
-        <ul class="nav-links">
-          <li><a href="2dPage.html">2D Page</a></li>
-          <li><a href="3dPage.html">3D Page</a></li>
-          <li><a href="developerPage.html">Developer Page</a></li>
-        </ul>
-      </nav>
-    </header>
+   <!-- NAVBAR -->
+    <nav class="absolute w-full navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">PROJEK GRAFIKA</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="2dPage.html">2D Page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="3dPage.html">3D Page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="developerPage.html">Developer Page</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <!-- Navigator -->
      <section class="absolute right-5 top-20 bg-white w-[400px] h-[400px] p-2 rounded-md flex flex-col gap-3">
         <h1 class="w-full text-center font-bold text-xl mb-2">Navigator</h1>
@@ -56,14 +68,15 @@
           <label for="fillColor">Fill Color:</label>
           <input type="color" id="fillColor" name="fillColor" value="#F4D03F" />
         </div>
-        <div class="grid grid-cols-3 gap-1 w-1/2">
+        <div class="flex">
+          <div class="grid grid-cols-3 gap-1 w-1/2">
           <div></div>
           <button
             id="atas"
             class="translate border border-black rounded-md px-2 py-1 cursor-pointer"
             type="submit"
           >
-            Atas
+            Z
           </button>
           <div></div>
           <button
@@ -71,21 +84,21 @@
             class="translate border border-black rounded-md px-2 py-1 cursor-pointer "
             type="submit"
           >
-            Kiri
+            -X
           </button>
           <input
             id="nilaiTranslate"
             type="number"
             class="border border-black px-2 py-1 cursor-pointer "
             type="submit"
-            value="20"
+            value="2"
           />
           <button
             id="kanan"
             class="translate border border-black rounded-md px-2 py-1 cursor-pointer "
             type="submit"
           >
-            Kanan
+            X
           </button>
           <div></div>
           <button
@@ -93,14 +106,31 @@
             class="translate border border-black rounded-md px-2 py-1 cursor-pointer "
             type="submit"
           >
-            Bawah
+            -Z
           </button>
           <div></div>
+          </div>
+          <div class="flex flex-col">
+            <button
+              id="maju"
+              class="translate border border-black rounded-md px-2 py-1 cursor-pointer "
+              type="submit">
+              Y
+            </button>
+            <button
+              id="mundur"
+              class="translate border border-black rounded-md px-2 py-1 cursor-pointer "
+              type="submit">
+              -Y
+            </button>
+          </div>
         </div>
+        
 
      </section>
       
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-    <script src="../js/handler3D.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script> 
+      <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+      <script src="../js/handler3D.js"></script>
   </body>
 </html>
