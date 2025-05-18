@@ -164,7 +164,9 @@ btnReset.addEventListener("click", () => {
 btnRotate.addEventListener("click", () => {
   if (!activeObject) return;
   const deg = parseFloat(inputRotate.value);
+
   // Putar di sumbu Y (atas bawah)
+  objectGroup.rotation.z += THREE.MathUtils.degToRad(deg);
   objectGroup.rotation.y += THREE.MathUtils.degToRad(deg);
 });
 
@@ -254,7 +256,7 @@ document.addEventListener("keydown", (event) => {
 
 // Event handler keyboard Scale
 document.addEventListener("keydown", (event) => {
-    if (event.key === "-") {
+  if (event.key === "-") {
     objectGroup.scale.multiplyScalar(0.9); // Scale down
     console.log("Scale down = ", scaleValue < 0 ? 0.1 : scaleValue);
   } else if (event.key === "=") {

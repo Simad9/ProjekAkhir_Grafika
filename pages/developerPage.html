@@ -3,24 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/style.css" />
     <title>PRROJEK GRAFIKA | DEVELOPER PAGE</title>
+     <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/stylePage.css" />
   </head>
   <body>
     <!-- NAVBAR -->
-    <header>
-      <nav class="navbar">
-        <div class="brand">PROJEK GRAFIKA</div>
-        <ul class="nav-links">
-          <li><a href="2dPage.html">2D Page</a></li>
-          <li><a href="3dPage.html">3D Page</a></li>
-          <li><a href="developerPage.html">Developer Page</a></li>
-        </ul>
-      </nav>
-    </header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">PROJEK GRAFIKA</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="2dPage.html">2D Page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="3dPage.html">3D Page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="developerPage.html">Developer Page</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
     <!-- CONTENT -->
-    <section class="container">
+    <section class="main-container">
       <div class="card">
         <img src="../images/wijdan.jpg" alt="Wijdan" />
         <h3>Wijdan</h3>
