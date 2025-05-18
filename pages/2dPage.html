@@ -3,147 +3,267 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>PRROJEK GRAFIKA | 2D PAGE</title>
+    <title>PROJEK GRAFIKA | 2D PAGE</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/stylePage.css" />
   </head>
   <body>
     <!-- NAVBAR -->
-    <header>
-      <nav class="navbar">
-        <div class="brand">PROJEK GRAFIKA</div>
-        <ul class="nav-links">
-          <li><a href="2dPage.html">2D Page</a></li>
-          <li><a href="3dPage.html">3D Page</a></li>
-          <li><a href="developerPage.html">Developer Page</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <!-- CONTENT -->
-    <section class="flex flex-row p-4 gap-4">
-      <canvas
-        id="myCanvas"
-        width="500"
-        height="400"
-        style="border: 1px solid black"
-        class="bg-white"
-      ></canvas>
-      <div class="flex flex-col gap-5">
-        <!-- OBjek Di tekan -->
-        <div>
-          <button
-            id="objek1"
-            class="objek border border-black rounded-md px-3 py-1 cursor-pointer"
-          >
-            Objek 1
-          </button>
-          <button
-            id="objek2"
-            class="objek border border-black rounded-md px-3 py-1 cursor-pointer"
-          >
-            Objek 2
-          </button>
-          <button
-            id="objek3"
-            class="objek border border-black rounded-md px-3 py-1 cursor-pointer"
-          >
-            Objek 3
-          </button>
-          <button
-            id="reset"
-            class="border border-black rounded-md px-3 py-1 cursor-pointer"
-          >
-            Reset
-          </button>
-        </div>
-        <!-- Button Translate -->
-        <div class="grid grid-cols-3 gap-2">
-          <button type="submit"></button>
-          <button
-            id="atas"
-            class="translate border border-black rounded-md px-3 py-1 cursor-pointer"
-            type="submit"
-          >
-            Atas
-          </button>
-          <button type="submit"></button>
-          <button
-            id="kiri"
-            class="translate border border-black rounded-md px-3 py-1 cursor-pointer"
-            type="submit"
-          >
-            Kiri
-          </button>
-          <input
-            id="nilaiTranslate"
-            type="number"
-            class="border border-black px-3 py-1 cursor-pointer"
-            type="submit"
-            value="20"
-          />
-          <button
-            id="kanan"
-            class="translate border border-black rounded-md px-3 py-1 cursor-pointer"
-            type="submit"
-          >
-            Kanan
-          </button>
-          <button type="submit"></button>
-          <button
-            id="bawah"
-            class="translate border border-black rounded-md px-3 py-1 cursor-pointer"
-            type="submit"
-          >
-            Bawah
-          </button>
-          <button type="submit"></button>
-        </div>
-        <!-- Button Rotate -->
-        <div class="flex items-center gap-3">
-          <input for="fillColor" type="number" id="nilaiRotasi" value="90" class="w-18 border-1 p-1"></input> Derajat
-          <button
-            id="rotasi"
-            type="submit"
-            class="border border-black rounded-md px-3 py-1 cursor-pointer"
-          >
-            Putar
-          </button>
-        </div>
-        <!-- Button Scale -->
-        <div class="flex items-center gap-3">
-          <input for="fillColor" type="number" id="nilaiSkala" value="2" class="w-10 border-1 p-1"></input> Kali
-          <button
-            id="skala"
-            type="submit"
-            class="border border-black rounded-md px-3 py-1 cursor-pointer"
-          >
-            Scale
-          </button>
-        </div>
-        <!-- Kasih Warna -->
-        <div class="flex items-center">
-          <label for="fillColor">Fill Color:</label>
-          <input type="color" id="fillColor" name="fillColor" value="#F4D03F" />
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">PROJEK GRAFIKA</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="2dPage.html">2D Page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="3dPage.html">3D Page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="developerPage.html">Developer Page</a>
+            </li>
+          </ul>
         </div>
       </div>
-    </section>
+    </nav>
 
-    <!-- Dokumentasi -->
-    <div class="px-5">
-      <h1 class="font-bold text-xl">Dokumentasi :</h1>
-      <p class="font-semibold text-base">Keyboard:</p>
-      <p>W = Atas, A = Kiri, S = Bawah, D = Kanan</p>
-      <p>arrow atas = Atas, arrow kiri = Kiri, arrow bawah = Bawah, arrow kanan = Kanan</p>
-      <p>Q = mutar kiri, R = mutar kanan</p>
-      <p>R = scale up , T = scale down</p>
-      <p>Space = reset</p>
-      <br>
-      <p>Mouse</p>
-      <p>Drag = pindah posisi</p>
-      <p>Scale Up = scale up</p><p>Scale Down = scale down</p>
+    <!-- MAIN CONTENT -->
+    <div class="main-container">
+      <div class="container-fluid p-3">
+        <div class="row g-3">
+          <!-- Left side: Canvas -->
+          <div class="col-lg-7">
+            <div class="canvas-container p-2">
+              <canvas
+                id="myCanvas"
+                width="500"
+                height="400"
+                style="width: 100%; height: auto;"
+              ></canvas>
+            </div>
+          </div>
+          
+          <!-- Right side: Controls -->
+          <div class="col-lg-5">
+            <div class="control-panel p-4 sticky-top" style="top: 10px">
+              <h4 class="mb-3">Control Panel</h4>
+              
+              <!-- Object Selection -->
+              <div class="mb-4 pb-3 border-bottom">
+                <div class="section-header">SELECT OBJECT</div>
+                <div class="d-flex flex-wrap gap-2">
+                  <button id="objek1" class="objek btn btn-secondary btn-object">Object 1</button>
+                  <button id="objek2" class="objek btn btn-outline-secondary btn-object">Object 2</button>
+                  <button id="objek3" class="objek btn btn-outline-secondary btn-object">Object 3</button>
+                  <button id="reset" class="btn btn-danger ms-auto">Reset</button>
+                </div>
+              </div>
+              
+              <!-- Translation Controls -->
+              <div class="mb-4 pb-3 border-bottom">
+                <div class="section-header">TRANSLATE</div>
+                <div class="mb-3 d-flex align-items-center">
+                  <label for="nilaiTranslate" class="form-label me-2 mb-0">Distance:</label>
+                  <input
+                    id="nilaiTranslate"
+                    type="number"
+                    class="form-control form-control-sm me-2"
+                    style="width: 70px;"
+                    value="20"
+                  >
+                  <span class="text-muted">pixels</span>
+                </div>
+                
+                <div class="d-flex justify-content-center">
+                  <div style="width: 130px;">
+                    <div class="d-flex justify-content-center mb-2">
+                      <button id="atas" class="translate btn btn-primary btn-direction">
+                        <i class="bi bi-arrow-up"></i>
+                      </button>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <button id="kiri" class="translate btn btn-primary btn-direction">
+                        <i class="bi bi-arrow-left"></i>
+                      </button>
+                      <button id="kanan" class="translate btn btn-primary btn-direction">
+                        <i class="bi bi-arrow-right"></i>
+                      </button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <button id="bawah" class="translate btn btn-primary btn-direction">
+                        <i class="bi bi-arrow-down"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Rotation and Scale Controls (Combined in One Row) -->
+              <div class="mb-4 pb-3 border-bottom">
+                <div class="row">
+                  <!-- Rotation Controls -->
+                  <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="section-header">ROTATE</div>
+                    <div class="d-flex align-items-center">
+                      <input
+                        type="number"
+                        id="nilaiRotasi"
+                        value="90"
+                        class="form-control form-control-sm me-2"
+                        style="width: 60px;"
+                      >
+                      <span class="text-muted me-2">°</span>
+                      <button id="rotasi" class="btn btn-primary btn-sm">
+                        <i class="bi bi-arrow-repeat"></i>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <!-- Scale Controls -->
+                  <div class="col-md-6">
+                    <div class="section-header">SCALE</div>
+                    <div class="d-flex align-items-center">
+                      <input
+                        type="number"
+                        id="nilaiSkala"
+                        value="2"
+                        class="form-control form-control-sm me-2"
+                        style="width: 60px;"
+                        step="0.1"
+                        min="0.1"
+                      >
+                      <span class="text-muted me-2">×</span>
+                      <button id="skala" class="btn btn-primary btn-sm">
+                        <i class="bi bi-arrows-angle-expand"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Color Controls -->
+              <div>
+                <div class="section-header">COLOR</div>
+                <div class="d-flex align-items-center">
+                  <label for="fillColor" class="form-label me-2 mb-0">Fill Color:</label>
+                  <input 
+                    type="color" 
+                    id="fillColor" 
+                    name="fillColor" 
+                    value="#F4D03F" 
+                    class="form-control form-control-color me-2"
+                  >
+                  <div class="px-3 py-1 rounded" id="colorPreview" style="background-color: #F4D03F;">
+                    Selected
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Instructions (Scrollable) -->
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header bg-light">
+                <h5 class="mb-0">Keyboard Shortcuts</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <div class="section-header">MOVEMENT</div>
+                      <div class="row">
+                        <div class="col-6">
+                          <div><span class="keyboard-shortcut">W</span> or <span class="keyboard-shortcut">↑</span> Move Up</div>
+                          <div><span class="keyboard-shortcut">A</span> or <span class="keyboard-shortcut">←</span> Move Left</div>
+                        </div>
+                        <div class="col-6">
+                          <div><span class="keyboard-shortcut">S</span> or <span class="keyboard-shortcut">↓</span> Move Down</div>
+                          <div><span class="keyboard-shortcut">D</span> or <span class="keyboard-shortcut">→</span> Move Right</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div class="section-header">OTHERS</div>
+                      <div><span class="keyboard-shortcut">Space</span> Reset</div>
+                      <div><span class="keyboard-shortcut">1</span> <span class="keyboard-shortcut">2</span> <span class="keyboard-shortcut">3</span> Select Object</div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <div class="section-header">ROTATION & SCALE</div>
+                      <div class="row">
+                        <div class="col-6">
+                          <div><span class="keyboard-shortcut">Q</span> Rotate Left</div>
+                          <div><span class="keyboard-shortcut">E</span> Rotate Right</div>
+                        </div>
+                        <div class="col-6">
+                          <div><span class="keyboard-shortcut">R</span> Scale Up</div>
+                          <div><span class="keyboard-shortcut">T</span> Scale Down</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div class="section-header">MOUSE CONTROLS</div>
+                      <div>
+                        <div><strong>Drag</strong>: Move object</div>
+                        <div><strong>Scroll Up</strong>: Scale up</div>
+                        <div><strong>Scroll Down</strong>: Scale down</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </body>
+    
+    <footer class="bg-dark text-white py-2 text-center mt-auto">
+      <div class="container">
+        <p class="mb-0">PROJEK GRAFIKA - 2D Graphics Tool</p>
+      </div>
+    </footer>
 
-  <script src="../js/handler2D.js"></script>
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Original JS -->
+    <script src="../js/handler2D.js"></script>
+    
+    <script>
+      // Add script to update color preview
+      document.getElementById('fillColor').addEventListener('input', function(e) {
+        document.getElementById('colorPreview').style.backgroundColor = e.target.value;
+      });
+      
+      // Make object selection buttons show active state
+      const objectButtons = document.querySelectorAll('.objek');
+      objectButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          objectButtons.forEach(btn => btn.classList.remove('active'));
+          objectButtons.forEach(btn => {
+            btn.classList.remove('btn-secondary');
+            btn.classList.add('btn-outline-secondary');
+          });
+          this.classList.add('active');
+          this.classList.remove('btn-outline-secondary');
+          this.classList.add('btn-secondary');
+        });
+      });
+    </script>
+  </body>
 </html>
