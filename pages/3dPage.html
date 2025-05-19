@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>PRROJEK GRAFIKA | 3D PAGE</title>
+    <title>PROJEK GRAFIKA | 3D PAGE</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -15,30 +15,20 @@
   </head>
   <body class="relative">
     <!-- NAVBAR -->
-    <nav class="absolute top-0 left-0 w-full navbar navbar-expand-lg navbar-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">PROJEK GRAFIKA</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="2dPage.html">2D Page</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="3dPage.html">3D Page</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="developerPage.html">Developer Page</a>
-            </li>
-          </ul>
+    <nav class="fixed top-0 left-0 w-full z-50 navbar-dark" style="background-color: rgb(35, 37, 37); height: 60px; box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);">
+      <div class="container-fluid d-flex justify-content-between align-items-center h-100">
+        <a class="text-white font-bold text-xl" href="#" style="text-decoration: none; font-weight: bold; font-size: 1.5rem;">PROJEK GRAFIKA</a>
+        <div class="d-flex">
+          <a class="text-white px-2 py-2 mx-1" href="2dPage.html" style="text-decoration: none; display: inline-block;">2D Page</a>
+          <a class="text-white px-2 py-2 mx-1" href="3dPage.html" style="text-decoration: none; display: inline-block; border-bottom: 2px solid white;">3D Page</a>
+          <a class="text-white px-2 py-2 mx-1" href="developerPage.html" style="text-decoration: none; display: inline-block;">Developer Page</a>
+          <a class="text-white px-2 py-2 mx-1" href="help.html" style="text-decoration: none; display: inline-block;">Help?</a>
         </div>
       </div>
     </nav>
 
     <!-- Navigator -->
-     <section class="absolute right-5 top-20 bg-white w-[400px] h-[400px] p-2 rounded-md flex flex-col gap-3">
+     <section class="absolute right-5 top-20 bg-white w-[400px] h-[400px] p-2 rounded-md flex flex-col gap-3" style="top: 80px; color: black;">
         <h1 class="w-full text-center font-bold text-xl mb-2">Navigator</h1>
         <!-- Object Dipilih -->
         <div>
@@ -132,11 +122,12 @@
           </div>
         </div>
         
-
      </section>
       
       <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script> 
       <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
       <script src="../js/handler3D.js"></script>
+      <!-- Bootstrap Bundle with Popper -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

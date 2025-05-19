@@ -2,21 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PRROJEK GRAFIKA | DEVELOPER PAGE</title>
-     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PROJEK GRAFIKA | DEVELOPER PAGE</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <!-- Custom CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- Optional Custom CSS -->
     <link rel="stylesheet" href="../css/stylePage.css" />
   </head>
   <body>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">PROJEK GRAFIKA</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -28,30 +42,60 @@
               <a class="nav-link" href="3dPage.html">3D Page</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="developerPage.html">Developer Page</a>
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="developerPage.html"
+                >Developer Page</a
+              >
+            </li>
+            <li>
+              <a class="nav-link" href="help.html">Help?</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <!-- CONTENT -->
-    <section class="main-container">
-      <div class="card">
-        <img src="../images/wijdan.jpg" alt="Wijdan" />
-        <h3>Wijdan</h3>
-        <p>123220010</p>
-      </div>
-      <div class="card">
-        <img src="../images/ageng.jpg" alt="Ageng" />
-        <h3>Ageng</h3>
-        <p>123220011</p>
-      </div>
-      <div class="card">
-        <img src="../images/fahmi.jpg" alt="Fahmi" />
-        <h3>Fahmi</h3>
-        <p>123220028</p>
+    <!-- MAIN CONTENT -->
+    <section
+      class="main-container container my-5 justify-content-center align-items-center d-flex"
+    >
+      <div class="row d-flex justify-content-center g-4">
+        <!-- Developer Card -->
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="card developer-card shadow-sm">
+            <img src="../images/person.jpg" alt="Wijdan" class="card-img-top" />
+            <div class="card-body text-center">
+              <h3 class="card-title">Wijdan</h3>
+              <p class="card-text text-muted">123220010</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="card developer-card shadow-sm">
+            <img src="../images/person.jpg" alt="Ageng" class="card-img-top" />
+            <div class="card-body text-center">
+              <h3 class="card-title">Ageng</h3>
+              <p class="card-text text-muted">123220011</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="card developer-card shadow-sm">
+            <img src="../images/person.jpg" alt="Fahmi" class="card-img-top" />
+            <div class="card-body text-center">
+              <h3 class="card-title">Fahmi</h3>
+              <p class="card-text text-muted">123220028</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
