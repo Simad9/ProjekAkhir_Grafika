@@ -20,7 +20,7 @@ const nilaiRotasi = document.getElementById("nilaiRotasi");
 
 const centerX = canvas.width / 2;
 const centerY = canvas.height / 2;
-let objectAktif = "";
+let objectAktif = "objek1";
 
 function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -98,7 +98,6 @@ function resetFunction() {
   nilaiRotasi.value = 90;
   nilaiSkala.value = 2;
   warna.value = "#F4D03F";
-  objectAktif = "objek1";
   clearCanvas();
 }
 
@@ -282,3 +281,6 @@ canvas.addEventListener("mousedown", (event) => {
 canvas.addEventListener("mouseup", () => {
   isDragging = false;
 });
+
+drawActiveObject();
+
