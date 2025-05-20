@@ -4,13 +4,18 @@
 /* Basic layout & body */
 /* =================== */
 /* Saya gabungkan style body dari ketiga file dengan background gelap (#1a1a1a) dan padding top karena navbar fixed */
+html, body {
+  height: 100vh;
+  margin: 0;
+  overflow: hidden; /* cegah scroll global */
+}
+
 body {
   background-color: #1a1a1a; /* versi gelap, bisa diganti ke #f8f9fa kalau mau terang */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding-top: 60px; /* untuk memberi ruang navbar fixed */
-  margin: 0; /* reset default margin */
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #e9ecef; /* teks terang untuk tema gelap */
 }
@@ -20,7 +25,10 @@ body {
 /* =================== */
 .main-container {
   display: flex;
-  flex: 1;
+  flex: 1 1 auto;
+  flex-direction: column;
+  height: calc(100vh - 60px); /* 60px = tinggi navbar */
+  overflow: hidden;
 }
 
 /* =================== */
@@ -33,12 +41,11 @@ body {
   background-color: #212529; /* gelap */
   padding: 0.5rem 1rem; /* dari versi terakhir */
   transition: all 0.3s ease;
-  z-index: 1000;
+  z-index: 1050; /* agar di atas elemen lain */
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 3px solid rgba(255, 255, 255, 0.1); /* garis bawah navbar */
-  z-index: 1030; /* agar di atas elemen lain */
 }
 
 .navbar-brand {
@@ -86,20 +93,74 @@ body {
 /* =================== */
 /* Content containers */
 /* =================== */
-.canvas-container {
-  background-color: white;
-  border-radius: 0.375rem;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  color: #212529; /* teks gelap untuk area canvas putih */
+.main-container > .container-fluid.p-3 {
+  height: 100%;
+  padding: 0 !important; /* hilangkan padding agar fleksibel */
+  display: flex;
+  overflow: hidden;
 }
 
-.control-panel {
+.row.g-3 {
+  display: flex;
+  flex-wrap: nowrap; /* jangan wrap */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Kolom canvas dan control panel full tinggi */
+.col-lg-7, .col-lg-5 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  padding: 0 1rem;
+}
+
+/* Canvas container harus fleksibel dan tanpa scroll */
+.canvas-container {
+  flex: 1 1 auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: white;
   border-radius: 0.375rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  height: fit-content;
-  color: #212529; /* agar teks kontrol panel gelap */
+  color: #212529; /* teks gelap untuk area canvas */
+}
+
+/* Canvas responsive, full lebar container, auto tinggi */
+canvas#myCanvas {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 100%;
+  display: block;
+}
+
+/* Control panel dengan sticky dan scroll internal bila tinggi terlalu besar */
+.control-panel {
+  flex: 1 1 auto;
+  max-height: 100%;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 0.375rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  color: #212529; /* teks gelap */
+  padding: 1.5rem !important;
+  position: sticky;
+  top: 10px;
   z-index: 1020;
+}
+
+/* Scrollbar style control panel */
+.control-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.control-panel::-webkit-scrollbar-thumb {
+  background-color: rgba(108, 117, 125, 0.5);
+  border-radius: 4px;
 }
 
 /* =================== */
@@ -204,14 +265,82 @@ body {
 /* =================== */
 /* Developer cards */
 /* =================== */
-.developer-card img {
-  object-fit: cover;
-  height: 250px;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
+/* Atur card developer agar semua tinggi sama */
+/* Container kolom jadi flex supaya card bisa stretch */
+.col-sm-12.col-md-6.col-lg-4 {
+  display: flex;
+  /* agar kolom bisa menyesuaikan tinggi card */
 }
 
-.developer-card h3 {
-  margin-bottom: 0.25rem;
-  color: #212529; /* teks gelap untuk judul */
+/* Card utama dengan flex column dan tinggi 100% */
+.developer-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* stretch sesuai kolom */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.375rem;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease;
+  color: black;
+}
+
+.developer-card:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Gambar memenuhi lebar, tinggi maksimal, dan proporsional */
+.developer-card img.card-img-top {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  flex-shrink: 0; /* gambar tidak ikut mengecil */
+}
+
+/* Body card fleksibel agar konten menyesuaikan */
+.developer-card .card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* teks di tengah vertikal */
+  align-items: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Judul dengan wrapping dan rapi */
+.developer-card .card-title {
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+/* Text muted untuk NIM */
+.developer-card .card-text.text-muted {
+  color: #6c757d;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Responsive: kecilkan gambar di layar kecil */
+@media (max-width: 576px) {
+  .developer-card img.card-img-top {
+    max-height: 150px;
+  }
+}
+
+
+/* =================== */
+/* Footer styling */
+/* =================== */
+footer {
+  background-color: #212529;
+  color: white;
+  padding: 0.5rem 0;
+  text-align: center;
+  flex-shrink: 0;
 }
